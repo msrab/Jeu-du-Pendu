@@ -49,7 +49,7 @@
 						$("#alphabet ul").empty();
 						wordID = data.id;
 						alert(data.id +' '+data.name+' '+data.crypt);
-
+  
 						$("#text").append(data.crypt);
 
 						var alphabet = data.alphabet.slice(0,26);
