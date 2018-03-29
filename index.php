@@ -1,109 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Jeu du pendu des pays</title>
-	<style>
-	#alphabet{
-		border: 1px solid red;
-	}
-	#text{
-		border: 1px solid blue;
-	}
-	ul{
-		list-style: none;
-	}
-	button:hover{
-		cursor: pointer;
-	}
-	</style>
+	<title>JEU DU PENDU</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+	<link rel="stylesheet" href="style.css">
 </head>
-<body>
-	<h1>Jeu du pendu des pays</h1>
-	<h2>Trouvez le nom du pays</h2>
-	<button id="play">Jouer</button>
-	<button id="stop">Voir la solution</button>
-
+<body class="container">
 	<div>
-		<div id="pendu"></div>
-		<div id="text"></div>
-		<div id="alphabet">
-			<ul>
-			</ul>
+		<h1>JEU DU PENDU - <span>Trouve le nom du pays</span></h1>
+		<a id="play" class="waves-effect waves-light btn-large">Jouer</a>
+		<a id="stop"  class="waves-effect waves-light btn-large">Voir la solution</a>
+		<div id="message"></div>
+	</div>
+
+	<div class="row">
+		<div id="pendu" class="col s5">
+			<div class="pendu-0 hide"></div>
+			<div class="pendu-1 hide"></div>
+			<div class="pendu-2 hide"></div>
+			<div class="pendu-3 hide"></div>
+			<div class="pendu-4 hide"></div>
+			<div class="pendu-5 hide"></div>
+			<div class="pendu-6 hide"></div>
 		</div>
+		<div class="col s7">
+			<div class="container">
+				<div id="text" class="center-align"></div>
+				<div id="alphabet" class="">
+					<ul class="row"></ul>
+				</div>
+			</div>
+		</div>
+		
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script>
-
-		var wordID = null;
-		$(function(){
-			$('#play').click(function(){
-				$.ajax({
-					url: 'traitement.php',
-					method: 'post',
-					data: {
-						get_function: 'get_country'
-					},
-					success : function(data){
-						$("#text").empty();
-						$("#alphabet ul").empty();
-						wordID = data.id;
-						alert(data.id +' '+data.name+' '+data.crypt);
-  
-						$("#text").append(data.crypt);
-
-						var alphabet = data.alphabet.slice(0,26);
-
-						$.each( alphabet, function( i, item ) {
- 
-						    var newListItem = "<li><button>" + item + "</button></li>";
-						 
-						    $("#alphabet ul").append( newListItem );
-						 
-						});
-					},
-					error : function(){
-						alert('error');
-					}
-				});
-			});
-
-
-			$('#stop').click(function(){
-				$.ajax({
-					url: 'traitement.php',
-					method: 'post',
-					data: {
-						get_function: 'get_solution',
-						wordID: wordID
-					},
-					success : function(data){
-						alert(data);
-					},
-					error : function(){
-						alert('error');
-					}
-				});
-			});
-
-			$('#alphabet').on('click', 'button',function(){
-				$.ajax({
-					url: 'traitement.php',
-					method: 'post',
-					data: {
-						get_function: 'get_attempt',
-						letter: $(this).text(),
-						crypt: $('#text').text()
-					},
-					success: function(){
-
-					},
-					error: function(){
-						alert('error');
-					}
-				});
-			});
-		});
-	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+	<script src="script.js"></script>
 </body>
 </html>
